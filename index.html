@@ -391,6 +391,155 @@ footer{
 
 }
 
+#musicBox{
+
+    display:none;
+
+    position:fixed;
+
+    bottom:25px;
+    right:25px;
+
+    z-index:9999;
+
+    animation:musicPop .5s ease;
+}
+
+.music-card{
+
+    width:340px;
+
+    background:rgba(255,245,248,.95);
+
+    backdrop-filter:blur(15px);
+
+    border:2px solid rgba(255,182,193,.4);
+
+    border-radius:24px;
+
+    padding:20px;
+
+    box-shadow:
+    0 12px 35px rgba(255,182,193,.25);
+
+}
+
+.music-title{
+
+    font-size:1.25rem;
+
+    font-weight:700;
+
+    color:#ff6fa5;
+
+    margin-bottom:5px;
+}
+
+.music-subtitle{
+
+    color:#777;
+
+    margin-bottom:15px;
+
+    font-size:.9rem;
+}
+
+.music-card audio{
+
+    width:100%;
+}
+
+.music-close{
+
+    margin-top:12px;
+
+    border:none;
+
+    background:#ffd6e5;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    cursor:pointer;
+
+    font-size:.85rem;
+}
+
+.music-close:hover{
+
+    transform:scale(1.05);
+}
+
+@keyframes musicPop{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px) scale(.9);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0) scale(1);
+    }
+}
+
+.music-card button{
+
+    border:none;
+
+    background:linear-gradient(
+        135deg,
+        #ffc7dc,
+        #ffb6c1
+    );
+
+    color:white;
+
+    padding:10px 16px;
+
+    border-radius:999px;
+
+    cursor:pointer;
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+    margin-right:8px;
+
+    transition:.25s;
+}
+
+.music-card button:hover{
+
+    transform:translateY(-2px) scale(1.03);
+
+    box-shadow:
+        0 8px 20px rgba(255,182,193,.35);
+}
+
+#songName{
+
+    margin-bottom:12px;
+
+    padding:10px;
+
+    background:rgba(255,182,193,.12);
+
+    border-radius:12px;
+
+    color:#ff6fa5;
+
+    font-weight:600;
+
+    text-align:center;
+}
+
 </style>
 </head>
 
@@ -603,13 +752,51 @@ Just how many times have u come here😭
 
 I'mma cryy!😭😭
     
-<br>
+<br><br>
     
+Btw, try typing "music" on your keyboard, I have a lil surprise for you.
+
+<br>
+<br>
+
 </p>
 
 </div>
 
 </section>
+
+<div id="musicBox" style="display:none;">
+
+    <div class="music-card">
+
+        <div class="music-title">
+            🐱 Meowie Music
+        </div>
+
+        <div class="music-subtitle">
+            You found the secret soundtrack.
+        </div>
+
+        <div id="songName">
+            Kitty Cat
+        </div>
+
+        <audio id="secretMusic" controls src="kittycat.mp3"></audio>
+
+        <br><br>
+
+        <button onclick="switchSong()">
+            🎵 Switch Song
+        </button>
+
+        <button onclick="closeMusic()">
+            ✨ Close
+        </button>
+
+    </div>
+
+</div>
+
 
 <section class="section final fade">
 
@@ -669,7 +856,7 @@ Too much overthinking ✓
 document.getElementById("cat").onclick=()=>{
 
 const msgs=[
-"meow",
+"meow, try typing music on keyboard",
 "meow meow",
 "cat approved",
 "certified cat moment"
@@ -695,15 +882,25 @@ let secret="";
 
 document.addEventListener("keydown",(e)=>{
 
-secret+=e.key.toLowerCase();
+    secret += e.key.toLowerCase();
 
-if(secret.length>10){
-secret=secret.slice(-10);
-}
+    if(secret.length > 10){
+        secret = secret.slice(-10);
+    }
 
-if(secret.includes("fish")){
-document.getElementById("aquarium").style.display="block";
-}
+    if(secret.includes("fish")){
+        document.getElementById("aquarium").style.display="block";
+        secret="";
+    }
+
+    if(secret.includes("music")){
+
+        document.getElementById("musicBox").style.display="block";
+
+        
+
+        secret="";
+    }
 
 });
 
@@ -731,6 +928,60 @@ document.addEventListener("click",(e)=>{
     },1500);
 
 });
+
+function closeMusic(){
+
+    const music = document.getElementById("secretMusic");
+
+    music.pause();
+
+    music.currentTime = 0;
+
+    document.getElementById("musicBox").style.display="none";
+
+}
+
+const songs = [
+    {
+        name: "Kitty Cat",
+        file: "kittycat.mp3"
+    },
+    {
+        name: "Kittypie",
+        file: "pie.mp3"
+    }
+];
+
+let currentSong = 0;
+
+function switchSong(){
+
+    currentSong = (currentSong + 1) % songs.length;
+
+    const music = document.getElementById("secretMusic");
+
+    music.src = songs[currentSong].file;
+
+    document.getElementById("songName").textContent =
+        songs[currentSong].name;
+
+    music.load();
+
+    music.play();
+
+}
+
+function closeMusic(){
+
+    const music = document.getElementById("secretMusic");
+
+    music.pause();
+
+    music.currentTime = 0;
+
+    document.getElementById("musicBox").style.display = "none";
+
+}
 
 function createSakura(){
 
