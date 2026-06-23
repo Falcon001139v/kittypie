@@ -754,7 +754,7 @@ I'mma cryy!😭😭
     
 <br><br>
     
-Btw, try typing "music" on your keyboard, I have a lil surprise for you.
+Btw, try typing "music" on your keyboard or tap that cat 5 times, I have a lil surprise for you.
 
 <br>
 <br>
@@ -853,6 +853,8 @@ Too much overthinking ✓
 
 <script>
 
+let catTaps = 0;
+
 document.getElementById("cat").onclick=()=>{
 
 const msgs=[
@@ -863,6 +865,16 @@ const msgs=[
 ];
 
 alert(msgs[Math.floor(Math.random()*msgs.length)]);
+
+catTaps++;
+
+if(catTaps >= 5){
+
+    document.getElementById("musicBox").style.display = "block";
+
+    catTaps = 0;
+}
+
 
 };
 
